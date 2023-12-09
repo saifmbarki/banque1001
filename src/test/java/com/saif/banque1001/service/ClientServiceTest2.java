@@ -44,7 +44,7 @@ public class ClientServiceTest2 {
 	        when(clientRepository.findById(code)).thenReturn(Optional.of(expectedClient));
 
 	        // When
-	        Optional<Client> result = clientService.findClientByCode(code);
+	        Optional<Client> result = Optional.ofNullable(clientService.findClientByCode(code));
 
 	        // Then
 	        //assertThat(expectedClient, result.orElse(null));

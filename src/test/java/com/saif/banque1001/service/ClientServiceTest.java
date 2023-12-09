@@ -29,7 +29,7 @@ public class ClientServiceTest {
 
 	    // Recherche du client par code
 	    Long clientCode = (long) 1;
-	    Client z = clientService.findClientByCode(clientCode).orElse(null);
+	    Client z = clientService.findClientByCode(clientCode);
 	    
 	   assertThat(z).isNotNull();
 	   assertThat(z.getCode()).isEqualTo(clientCode);
