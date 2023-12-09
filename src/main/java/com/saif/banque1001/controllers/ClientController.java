@@ -34,7 +34,7 @@ public class ClientController {
 
 	
 	
-
+	//TODO JUST TO TEST JENKINS
 	
 	@GetMapping("/clients/{code}")
 	public ResponseEntity<ClientDto> findClientByCode(@PathVariable Long code) throws Exception{
