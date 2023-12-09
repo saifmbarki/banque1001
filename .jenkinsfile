@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+
+    environment {
+        // Set Maven home path if not automatically configured by Jenkins
+        MAVEN_HOME = tool 'Maven'
+        PATH = "$MAVEN_HOME/bin:$PATH"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Maven build
+                    echo 'Building the project...'
+                    sh 'mvn clean install'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Maven test
+                    echo 'Running tests...'
+                    sh 'mvn test'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Add deployment steps if needed
+                    echo 'Deploying...'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded! Perform additional success actions if needed.'
+        }
+
+        failure {
+            echo 'Pipeline failed! Perform additional failure actions if needed.'
+        }
+    }
+}
