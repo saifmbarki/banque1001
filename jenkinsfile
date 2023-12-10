@@ -23,6 +23,7 @@ pipeline {
 //            steps {
 //                // Étape de tests automatisés
 //                //bat 'mvn test'
+//					//test trigger	
 //            }
 //        }
 //
