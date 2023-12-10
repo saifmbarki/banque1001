@@ -1,56 +1,67 @@
 pipeline {
     agent any
 
-    environment {
-        // Set Maven home path if not automatically configured by Jenkins
-        MAVEN_HOME = tool 'Maven'
-        PATH = "$MAVEN_HOME/bin:$PATH"
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                // Étape pour récupérer le code source depuis le référentiel Git
+                git 'https://github.com/saifmbarki/banque1001.git'
             }
         }
 
         stage('Build') {
             steps {
-                script {
-                    // Maven build
-                    echo 'Building the project...'
-                    sh 'mvn clean install'
-                }
+                // Étape de build avec Maven
+                //sh 'mvn clean package' dans linux
+                bat 'mvn clean package'
             }
         }
 
-        stage('Test') {
+        stage('Tests') {
             steps {
-                script {
-                    // Maven test
-                    echo 'Running tests...'
-                    sh 'mvn test'
-                }
+                // Étape de tests automatisés
+                //bat 'mvn test'
             }
         }
 
-        stage('Deploy') {
+        stage('Static Code Analysis') {
             steps {
-                script {
-                    // Add deployment steps if needed
-                    echo 'Deploying...'
-                }
+                // Étape d'analyse statique du code avec SonarQube
+                //bat 'mvn sonar:sonar'
+            }
+        }
+
+        stage('Deploy to Test Environment') {
+            steps {
+                // Étape de déploiement sur l'environnement de test
+                // Ceci peut impliquer la copie des artefacts vers les serveurs de test
+                // ou le déploiement dans des conteneurs Docker, par exemple.
+            }
+        }
+
+        stage('Validation Tests on Test Environment') {
+            steps {
+                // Étape de tests de validation manuels ou automatisés sur l'environnement de test
+                // Assurez-vous que l'application se comporte comme prévu sur l'environnement de test.
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                // Étape de déploiement sur l'environnement de production
+                // Peut impliquer une confirmation manuelle avant le déploiement sur la production.
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline succeeded! Perform additional success actions if needed.'
+            // Actions à prendre en cas de succès du pipeline
+            echo 'Le pipeline a réussi! Déploiement continu activé.'
         }
-
         failure {
-            echo 'Pipeline failed! Perform additional failure actions if needed.'
+            // Actions à prendre en cas d'échec du pipeline
+            echo 'Le pipeline a échoué. Des correctifs sont nécessaires.'
         }
     }
 }
