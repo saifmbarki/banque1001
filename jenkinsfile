@@ -12,8 +12,10 @@ pipeline {
         stage('Build') {
             steps {
                 // Étape de build avec Maven
+                //sh 'mvn clean package' dans linux
                 //sh 'mvn clean package'
-                bat 'mvn clean package'
+                //maven n'est pas installer dans l'image :/
+                sh 'echo "Hello from Shell"'
             }
         }
 
